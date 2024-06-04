@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import home, martillos, contactos, agregar, listarP, modificar_producto, eliminar_producto, registro, login, ProductoViewset, listarU, UserViewset
+from .views import home, martillos, contactos, agregar, listarP, modificar_producto, eliminar_producto, registro, login, ProductoViewset, listarU, UserViewset, agregarOferta
 from rest_framework import routers
 
 
@@ -19,7 +19,8 @@ urlpatterns = [
     path('registro', registro, name="registro"),
     path('login', login, name="login"),
     path('api/', include(router.urls)),
-    path('listarU', listarU, name="listarU" )
+    path('listarU', listarU, name="listarU" ),
+    path('agregarOferta', agregarOferta, name="agregarOferta")
     
     
 ]

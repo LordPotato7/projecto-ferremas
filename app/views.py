@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Producto, Contacto
-from .forms import ContactoForm, ProductoForm,CustomUserCreationForm
+from .models import Producto, Contacto, Producto_Oferta
+from .forms import ContactoForm, ProductoForm,CustomUserCreationForm, ProductoOfertaForm
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.contrib.auth import authenticate, login as auth_login
@@ -42,6 +42,8 @@ def contactos(request):
             data['form'] = formulario
     return render(request,'app/contacto.html', data)
 
+
+#Producto normal
 @permission_required('app.add_producto')
 def agregar(request):
     data = { 
@@ -99,6 +101,7 @@ def eliminar_producto (request, id):
 
     return redirect(to='listarP')
 
+#Usuario
 def registro(request):
     data = {
         'form': CustomUserCreationForm()
@@ -116,6 +119,7 @@ def registro(request):
         data["form"] = formulario
     
     return render(request, 'registration/registro.html', data)
+
 
 def login(request):
     return render(request, 'registration/login.html')
@@ -138,3 +142,20 @@ def eliminar_usuario (request, id):
     usuario.delete()
     messages.success(request, "Eliminado Correctamente")
     return redirect(to='listarU')
+
+#Agregar Oferta
+
+
+def agregarOferta(request):
+    data = { 
+        'form': ProductoOfertaForm()
+    }
+
+    if request.method== 'POST':
+        formulario = ProductoOfertaForm(data=request.POST, files=request.FILES)
+        if formulario.is_valid():
+            formulario.save()
+            messages.success(request, " Modificado Correctamente")
+        else:
+            data["form"]=formulario
+    return render(request,'formularios/oferta/agregarOferta.html', data)
