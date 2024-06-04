@@ -1,0 +1,54 @@
+{% extends 'app/base.html' %}
+
+{% block js %}
+<script>
+    function eliminarProducto(id) {
+    Swal.fire({
+        "title":"Estas seguo de querer eliminar este Producto?",
+        "Text" : "Esta accion no se puede deshacer",
+        "icon" : "question",
+        "showCancelButton": true,
+        "cancelButtonText": "Canecelar",
+        "confirmButtonText":"Si,Eliminar",
+        "reverseButtons":true
+    })
+    .then(function(result){
+        if(result.isConfirmed) {
+            window. location.href = "/eliminarU/"+id+"/"}
+    
+
+    })  
+}
+    </script>
+{% endblock %}
+
+{%block contenido%}
+
+{%load crispy_forms_tags%}
+{% load humanize %}
+<table class="table table-stiped table-hover responsive-sm">
+    <tr>
+        <h2>Listado de Usuarios</h2>
+        <th>Nombre de usuario</th>
+        <th>Admin</th>
+        
+    </tr>
+
+    {% for p in usuarios %}
+    <tr>
+        <td>{{p.username | title}}</td>
+        {%if p.is_superuser %}
+        <td>Si</td>
+        {%else%}
+        <td>No</td>
+        {%endif%}
+        <td>
+            <a href="#" onclick="eliminarProducto({{p.id}})" class="btn btn-danger btn-sm">Eliminar</a>
+        </td>
+
+    </tr>
+
+    {% endfor %}
+</table>
+
+{%endblock%}

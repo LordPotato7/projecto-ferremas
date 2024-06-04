@@ -1,0 +1,18 @@
+1) Crear entorno virtual:  python -m venv myenv
+2) activar el entorno :  source myenv/bin/activate
+3) instalar django: pip install django
+4) instalar lo demas: pip instal -r requirements.txt
+
+
+Si no les funciona al abrir el server, agregar en settings.py, en "CSRF_TRUSTED_ORIGINS" agregar el link que les da la aplicacion al abrir
+
+Como ingresar a la api:
+http://127.0.0.1:8000/api/producto
+http://127.0.0.1:8000/api/user
+
+como ingresar a la documentacion de la api: 
+
+http://127.0.0.1:8000/docs/
+
+
+

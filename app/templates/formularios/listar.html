@@ -1,0 +1,64 @@
+{% extends 'app/base.html' %}
+
+{% block js %}
+<script>
+    function eliminarProducto(id) {
+    Swal.fire({
+        "title":"Estas seguo de querer eliminar este Producto?",
+        "Text" : "Esta accion no se puede deshacer",
+        "icon" : "question",
+        "showCancelButton": true,
+        "cancelButtonText": "Canecelar",
+        "confirmButtonText":"Si,Eliminar",
+        "reverseButtons":true
+    })
+    .then(function(result){
+        if(result.isConfirmed) {
+            window. location.href = "/eliminarP/"+id+"/"}
+    
+
+    })  
+}
+    </script>
+{% endblock %}
+
+{%block contenido%}
+
+{%load crispy_forms_tags%}
+{% load humanize %}
+<table class="table table-stiped table-hover responsive-sm">
+    <tr>
+        <h2>Listado de productos</h2>
+        <th>Codigo</th>
+        <th>Nombre</th>
+        <th>Precio</th>
+        <th>Marca</th>
+        <th>Categoria</th>
+        <th>Tipo de Producto</th>
+        <th>Fecha de creacion</th>
+        <th>Stock</th>
+        <th>Opciones</th>
+    </tr>
+
+    {% for p in productos %}
+    <tr>
+        <td>{{p.codigo | title}}</td>
+        <td>{{p.nombre | title}}</td>
+        <td>${{p.precio | intcomma}}</td>
+        <td>{{p.marca| title}}</td>
+        <td>{{p.categoria | title}}</td>
+        <td>{{p.tipo| title}}</td>
+        <td>{{p.fecha | title}}</td>
+        <td>{{p.stock | title}}</td>
+        
+        <td>
+            <a href="{% url 'modificarP' p.id %}" class="btn btn-info btn-sm">Modificar</a> 
+            <a href="" onclick="eliminarProducto({{p.id}})" class="btn btn-danger btn-sm">Eliminar</a>
+        </td>
+
+    </tr>
+
+    {% endfor %}
+</table>
+
+{%endblock%}

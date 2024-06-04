@@ -1,0 +1,7 @@
+
+django
+pillow
+django-crispy-forms
+crispy-bootstrap5
+django-rest-framework
+coreapi
