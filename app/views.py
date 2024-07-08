@@ -19,7 +19,12 @@ class UserViewset(viewsets.ModelViewSet):
 
 # Create your views here.
 def home(request):
-    return render(request,'app/home.html')
+    productosOferta = Producto_Oferta.objects.all()
+
+    data = {
+        'productosOferta' : productosOferta
+    }
+    return render(request,'app/home.html', data)
 
 def martillos(request):
     productos = Producto.objects.all()
@@ -146,16 +151,47 @@ def eliminar_usuario (request, id):
 #Agregar Oferta
 
 
-def agregarOferta(request):
-    data = { 
-        'form': ProductoOfertaForm()
+def agregarOferta(request, id):
+    producto = get_object_or_404(Producto, id=id)
+    
+    # Initialize the data dictionary here
+    data = {} 
+    
+    # Pass initial data to the form based on the product
+    initial_data = {
+        'codigo' : producto.codigo if hasattr(producto, 'codigo') else None,
+        'nombre': producto.nombre if hasattr(producto, 'nombre') else None,
+        'tipo': producto.tipo if hasattr(producto, 'tipo') else None,
+        'marca': producto.marca if hasattr(producto, 'marca') else None,
+        'stock': producto.stock if hasattr(producto, 'stock') else None,
+        'precio': producto.precio if hasattr(producto, 'precio') else None,
+        'imagen': producto.imagen if hasattr(producto, 'imagen') else None,
+        'stock': producto.stock if hasattr(producto, 'stock') else None,
+        'categoria': producto.categoria if hasattr(producto, 'categoria') else None,
+    }
+    
+    if request.method == 'POST':
+        formulario = ProductoOfertaForm(data=request.POST, files=request.FILES, initial=initial_data)
+        if formulario.is_valid():
+            # Associate the offer with the product
+            oferta = formulario.save(commit=False)
+            oferta.producto = producto
+            oferta.save()
+            
+            messages.success(request, " Modificado Correctamente")
+            return redirect(to='listarP')
+        else:
+            data["form"] = formulario
+    else:
+        data['form'] = ProductoOfertaForm(initial=initial_data)
+    
+    return render(request,'formularios/oferta/agregarOferta.html', data)
+def listarOferta(request):
+
+    productosOferta = Producto_Oferta.objects.all()
+
+    data = {
+        'productosOferta' : productosOferta
     }
 
-    if request.method== 'POST':
-        formulario = ProductoOfertaForm(data=request.POST, files=request.FILES)
-        if formulario.is_valid():
-            formulario.save()
-            messages.success(request, " Modificado Correctamente")
-        else:
-            data["form"]=formulario
-    return render(request,'formularios/oferta/agregarOferta.html', data)
+    return render(request,'formularios/oferta/listarOferta.html', data)

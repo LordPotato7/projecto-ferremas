@@ -1,6 +1,7 @@
 {% extends 'app/base.html' %}
 
 {%block contenido%}
+{% load humanize %}
 <section class="hero-section">
     <div class="container">
         <div class="row align-items-center">
@@ -19,38 +20,34 @@
     <div class="container">
         <h2>Productos destacados</h2>
         <br>
-            <div class="row">
-                <div class="col-md-4 mb-4">
-                    <div class="card">
-                        <img src="" alt="Producto 1" class="card-img-top">
-                            <div class="card-body">
-                                <h5 class="card-title">Teclado mecánico RGB</h5>
-                                <p class="card-text">Ideal para gamers y para aquellos que buscan una experiencia de escritura única.</p>
-                                <a href="" class="btn btn-primary button">Ver más</a>
+        <div class="Productos row">
+            {% for p in productosOferta %}
+            <div class="col-md-4 mb-4 {% cycle 'first-col' 'middle-col' 'last-col' %}">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="Producto">
+                            <div class="contenedor_producto">
+                                {% if p.imagen %}
+                                    <img src="{{ p.imagen.url }}" alt="imagen teclado" style="width: 300px; height: 300px;">
+                                {% endif %}
+                                <div class="detalle">
+                                    <h4>{{ p.marca | capfirst }}</h4>
+                                    <h5>{{ p.nombre | title }}</h5>
+                                    <h3> ${{ p.precio | intcomma }}</h3>
+                                    <h3> Precio Oferta : ${{ p.precio_oferta | intcomma }}</h3>
+                                    
+                                    
+                                    
+                                    <button class="btn btn-primary" onclick="agregarProducto('{{ p.nombre }}', {{ p.precio }})">Agregar al carrito</button>
+                                </div>
                             </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card">
-                        <img src="" alt="Producto 2" class="card-img-top">
-                            <div class="card-body">
-                                <h5 class="card-title">Mouse inalámbrico</h5>
-                                <p class="card-text">Diseñado para brindar la mayor precisión en tus movimientos y reducir la fatiga.</p>
-                                <a href="" class="btn btn-primary button">Ver más</a>
-                            </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card">
-                        <img src="" alt="Producto 3" class="card-img-top">
-                            <div class="card-body">
-                                <h5 class="card-title">Tarjeta gráfica</h5>
-                                <p class="card-text">Con tecnología para una experiencia de juego increíblemente realista.</p>
-                                <a href="" class="btn btn-primary button">Ver más</a>
-                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+            
+            {% endfor %}
+        </div>
     </div>
 </section>
 <section class="about-section">

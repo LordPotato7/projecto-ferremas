@@ -52,7 +52,8 @@
         <td>{{p.stock | title}}</td>
         
         <td>
-            <a href="{% url 'modificarP' p.id %}" class="btn btn-info btn-sm">Modificar</a> 
+            <a href="{% url 'modificarP' p.id %}" class="btn btn-info btn-sm">Modificar</a>
+            <a href="{% url 'agregarOferta' p.id %}" class="btn btn-info btn-sm">Agregar oferta</a> 
             <a href="" onclick="eliminarProducto({{p.id}})" class="btn btn-danger btn-sm">Eliminar</a>
         </td>
 

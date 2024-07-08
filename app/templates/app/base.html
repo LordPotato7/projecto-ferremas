@@ -37,7 +37,7 @@
                             <a class="nav-link" href="{" style="color: #FFFFFF;">Sobre Nosotros</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="" style="color: #FFFFFF;">Contacto</a>
+                            <a class="nav-link" href="{% url 'contactos' %}" style="color: #FFFFFF;">Contacto</a>
                         </li>
                         {%if user.is_superuser %}
                         <li class="nav-item dropdown">
@@ -46,6 +46,7 @@
                                 <li><a class="dropdown-item" href="{% url 'agregar'%}" style="color: #FFFFFF;">Agregar Producto</a></li>
                                 <li><a class="dropdown-item" href="{% url 'listarP' %}" style="color: #FFFFFF;">Producto</a></li>
                                 <li><a class="dropdown-item" href="{% url 'listarU' %}" style="color: #FFFFFF;">Usuarios</a></li>
+                                <li><a class="dropdown-item" href="{% url 'listarOferta' %}" style="color: #FFFFFF;">Ofertas</a></li>
                             </ul>
                         </li>
                         {% endif %}                 
